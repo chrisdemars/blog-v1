@@ -1,0 +1,20 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+type Props = HTMLAttributes<'span'> & HTMLAttributes<'a'> & { href?: string };
+
+const { href, class: className, ...attrs } = Astro.props;
+const Element = href ? 'a' : 'span';
+---
+
+<Element
+  href={href}
+  class:list={[
+    'inline-block rounded-full border border-surface-border px-3 py-0.5 font-mono text-sm text-on-surface no-underline',
+    href && 'hover:border-on-surface',
+    className,
+  ]}
+  {...attrs}
+>
+  <slot />
+</Element>

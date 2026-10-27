@@ -1,1 +1,119 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/source-code-pro';
+
+/*
+ * Palette, matched to spacetimedb.com. The comment on each token names the
+ * SpacetimeDB variable it came from. scripts/check-contrast.mjs reads these
+ * values, so keep them as plain hex.
+ */
+@theme {
+  --color-primary: #0b1114; /* --color-shade7 */
+  --color-primary-raised: #122129; /* --color-shade3 */
+  --color-primary-border: #363840; /* --color-n5 */
+  --color-on-primary: #e6e9f0; /* --color-n1 */
+  --color-on-primary-muted: #b6c0cf; /* --color-n3 */
+
+  --color-secondary: #4cf490; /* --color-green */
+  --color-secondary-raised: #7ff7b0; /* --color-green, lightened for cards */
+  --color-secondary-border: #1e5e3a; /* --color-green, darkened for borders */
+  --color-on-secondary: #0b1114; /* --color-shade7 */
+  --color-on-secondary-muted: #1e3a2a; /* --color-shade7, tinted green */
+
+  /* Accents are only used on primary (dark) surfaces. */
+  --color-accent-blue: #02befa; /* --color-blue */
+  --color-accent-purple: #a880ff; /* --color-purple */
+  --color-accent-pink: #ff80fb; /* --color-pink */
+  --color-accent-yellow: #fbdc8e; /* --color-yellow */
+
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Source Code Pro Variable', ui-monospace, monospace;
+}
+
+/*
+ * Contextual colors. Each surface sets these, and components only ever use
+ * them (bg-surface, text-on-surface, ...), so the same component works on
+ * both section variants without knowing which one it's in.
+ */
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-border: var(--surface-border);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-muted: var(--on-surface-muted);
+  --color-link: var(--link);
+  --color-action: var(--action);
+  --color-on-action: var(--on-action);
+  --color-focus: var(--focus);
+}
+
+@layer base {
+  :root {
+    @apply surface-primary;
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-surface font-sans text-on-surface antialiased;
+  }
+
+  a {
+    @apply text-link underline decoration-2 underline-offset-4;
+  }
+
+  a:hover {
+    @apply decoration-[3px];
+  }
+
+  :focus-visible {
+    @apply rounded-sm outline-3 outline-offset-2 outline-focus;
+  }
+
+  code,
+  kbd,
+  pre {
+    @apply font-mono;
+  }
+}
+
+/*
+ * Sections alternate primary/secondary automatically, in the order they
+ * appear on the page. A Section with an explicit variant opts out.
+ */
+@layer components {
+  .section:nth-child(odd of .section):not([data-variant]) {
+    @apply surface-primary;
+  }
+
+  .section:nth-child(even of .section):not([data-variant]) {
+    @apply surface-secondary;
+  }
+}
+
+@utility surface-primary {
+  --surface: var(--color-primary);
+  --surface-raised: var(--color-primary-raised);
+  --surface-border: var(--color-primary-border);
+  --on-surface: var(--color-on-primary);
+  --on-surface-muted: var(--color-on-primary-muted);
+  --link: var(--color-secondary);
+  --action: var(--color-secondary);
+  --on-action: var(--color-on-secondary);
+  --focus: var(--color-secondary);
+  background-color: var(--surface);
+  color: var(--on-surface);
+}
+
+@utility surface-secondary {
+  --surface: var(--color-secondary);
+  --surface-raised: var(--color-secondary-raised);
+  --surface-border: var(--color-secondary-border);
+  --on-surface: var(--color-on-secondary);
+  --on-surface-muted: var(--color-on-secondary-muted);
+  --link: var(--color-on-secondary);
+  --action: var(--color-on-secondary);
+  --on-action: var(--color-secondary);
+  --focus: var(--color-on-secondary);
+  background-color: var(--surface);
+  color: var(--on-surface);
+}
