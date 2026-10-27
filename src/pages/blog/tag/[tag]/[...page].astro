@@ -1,0 +1,36 @@
+---
+import type { GetStaticPaths, Page } from 'astro';
+import BlogListing from '../../../../components/BlogListing.astro';
+import {
+  getPosts,
+  getTags,
+  POSTS_PER_PAGE,
+  type Post,
+} from '../../../../lib/blog';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const tags = getTags(await getPosts());
+  return tags.flatMap((tag) =>
+    paginate(tag.posts, {
+      params: { tag: tag.slug },
+      pageSize: POSTS_PER_PAGE,
+      props: { tags, label: tag.label },
+    }),
+  );
+}) satisfies GetStaticPaths;
+
+const { page, tags, label } = Astro.props as {
+  page: Page<Post>;
+  tags: ReturnType<typeof getTags>;
+  label: string;
+};
+const { tag } = Astro.params;
+---
+
+<BlogListing
+  title={`Posts tagged “${label}”`}
+  description={`Articles by Chris DeMars tagged ${label}.`}
+  page={page}
+  tags={tags}
+  currentTag={tag}
+/>

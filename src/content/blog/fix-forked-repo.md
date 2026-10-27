@@ -3,7 +3,6 @@ title: 'How-To Detach a Forked Repo'
 description: 'Picture this. You find a template or a tool you want to use on GitHub. You fork the repo, clone it, and then start working on it locally...'
 pubDate: 2025-05-09
 heroImage: '../../assets/blog/posts/fix-forked-repo/gh-contribs.jpg'
-badge: 'New'
 tags: ['GitHub', 'Open Source', 'How-To']
 ---
 

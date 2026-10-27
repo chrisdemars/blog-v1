@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from './BaseLayout.astro';
+import Section from '../components/Section.astro';
+import PostMeta from '../components/PostMeta.astro';
+import PostCard from '../components/PostCard.astro';
+import TagLinks from '../components/TagLinks.astro';
+import { SITE } from '../config';
+import type { Post } from '../lib/blog';
+
+interface Props {
+  post: Post;
+  related: Post[];
+}
+
+const { post, related } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, heroAlt, tags } =
+  post.data;
+const url = new URL(Astro.url.pathname, Astro.site);
+
+// BlogPosting structured data. Site-wide SEO (Open Graph, Person) is #11.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title,
+  description,
+  datePublished: pubDate.toISOString(),
+  dateModified: (updatedDate ?? pubDate).toISOString(),
+  url: url.href,
+  mainEntityOfPage: url.href,
+  ...(heroImage && { image: new URL(heroImage.src, Astro.site).href }),
+  keywords: tags.join(', '),
+  author: {
+    '@type': 'Person',
+    name: SITE.name,
+    jobTitle: SITE.jobTitle,
+    url: Astro.site?.href,
+  },
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <script
+    slot="head"
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(jsonLd)}
+  />
+  <Section variant="primary">
+    <article class="mx-auto max-w-3xl">
+      <header>
+        <a href="/blog/" class="font-mono text-sm">
+          ← All posts
+        </a>
+        <h1 class="mt-6 text-3xl font-bold tracking-tight text-balance sm:text-5xl">
+          {title}
+        </h1>
+        <p class="mt-4 text-lg text-on-surface-muted">{description}</p>
+        <div class="mt-6 flex flex-col gap-4">
+          <PostMeta post={post} />
+          <TagLinks tags={tags} />
+        </div>
+        {heroImage && (
+          <Image
+            src={heroImage}
+            alt={heroAlt}
+            widths={[480, 768, 1024, 1536]}
+            sizes="(min-width: 48rem) 48rem, 100vw"
+            loading="eager"
+            fetchpriority="high"
+            class="mt-10 h-auto w-full rounded-xl"
+          />
+        )}
+      </header>
+      <div class="prose prose-lg prose-surface mt-10 max-w-none">
+        <slot />
+      </div>
+    </article>
+  </Section>
+
+  {related.length > 0 && (
+    <Section variant="secondary" aria-labelledby="related-heading">
+      <h2 id="related-heading" class="text-3xl font-bold">
+        Related posts
+      </h2>
+      <ul class="mt-8 grid gap-6 md:grid-cols-3">
+        {related.map((other) => (
+          <li>
+            <PostCard post={other} headingLevel={3} />
+          </li>
+        ))}
+      </ul>
+    </Section>
+  )}
+</BaseLayout>

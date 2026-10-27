@@ -10,6 +10,8 @@ import HomeHero from '../components/HomeHero.astro';
 import globalCss from '../styles/global.css?raw';
 import { CONTRAST_PAIRS, contrastRatio, parseTokens } from '../lib/contrast';
 import { SURFACE_CLASS } from '../lib/surfaces';
+import { Code } from 'astro:components';
+import { codeTheme } from '../styles/code-theme';
 
 const tokens = parseTokens(globalCss);
 const hex = Object.fromEntries(tokens.map(({ name, hex }) => [name, hex]));
@@ -37,6 +39,16 @@ const typeScale = [
     class: 'font-mono text-sm text-on-surface-muted',
   },
 ];
+
+const codeSample = `// Block install-time scripts from dependencies
+import { readFile } from 'node:fs/promises';
+
+const pkg = JSON.parse(await readFile('package.json', 'utf8'));
+const MAX_DEPS = 42;
+
+export function audit(deps: string[]): boolean {
+  return deps.length <= MAX_DEPS && !pkg.scripts?.postinstall;
+}`;
 
 const variants = Object.keys(SURFACE_CLASS) as (keyof typeof SURFACE_CLASS)[];
 ---
@@ -212,13 +224,39 @@ const variants = Object.keys(SURFACE_CLASS) as (keyof typeof SURFACE_CLASS)[];
     </div>
   </Section>
 
+  <Section aria-labelledby="prose">
+    <h2 id="prose" class="text-3xl font-bold">
+      Blog posts
+    </h2>
+    <p class="mt-2 max-w-prose">
+      Post bodies use <code>prose prose-surface</code>, which maps the
+      typography plugin onto the current surface. Posts sit on dark sections.
+      Code blocks use <code>src/styles/code-theme.ts</code>, built from the
+      accent colors, all AA on <code>primary-raised</code>.
+    </p>
+    <div class="surface-primary mt-8 rounded-xl border border-surface-border p-6 sm:p-10">
+      <div class="prose prose-lg prose-surface max-w-none">
+        <h3>Section heading inside a post</h3>
+        <p>
+          Body copy with a <a href="#prose">link</a>, <strong>bold text</strong>
+          , and <code>inline code</code>.
+        </p>
+        <blockquote>A pull quote from the post.</blockquote>
+        <ul>
+          <li>Unordered list item</li>
+          <li>Another item</li>
+        </ul>
+        <Code code={codeSample} lang="ts" theme={codeTheme} />
+      </div>
+    </div>
+  </Section>
+
   <Section aria-labelledby="pending">
     <h2 id="pending" class="text-3xl font-bold">
       Coming later
     </h2>
     <ul class="mt-4 list-disc space-y-1 pl-5">
       <li>Form fields: added with the contact form (#8)</li>
-      <li>Code block theme: added with the blog (#5)</li>
     </ul>
   </Section>
 </PageLayout>

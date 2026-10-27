@@ -1,0 +1,25 @@
+---
+import type { GetStaticPaths, Page } from 'astro';
+import BlogListing from '../../components/BlogListing.astro';
+import { getPosts, getTags, POSTS_PER_PAGE, type Post } from '../../lib/blog';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getPosts();
+  return paginate(posts, {
+    pageSize: POSTS_PER_PAGE,
+    props: { tags: getTags(posts) },
+  });
+}) satisfies GetStaticPaths;
+
+const { page, tags } = Astro.props as {
+  page: Page<Post>;
+  tags: ReturnType<typeof getTags>;
+};
+---
+
+<BlogListing
+  title="Blog"
+  description="Articles by Chris DeMars on software supply chain security, accessibility, frontend development, and speaking at conferences."
+  page={page}
+  tags={tags}
+/>

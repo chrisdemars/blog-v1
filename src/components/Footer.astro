@@ -6,6 +6,7 @@ const socials = [
   { href: SOCIALS.linkedin, label: 'LinkedIn' },
   { href: SOCIALS.sessionize, label: 'Sessionize' },
   { href: SOCIALS.twitter, label: 'Twitter' },
+  { href: '/rss.xml', label: 'RSS' },
 ];
 ---
 
@@ -23,7 +24,7 @@ const socials = [
     <ul class="flex flex-wrap gap-x-5 gap-y-2 sm:justify-end">
       {socials.map(({ href, label }) => (
         <li>
-          <a href={href} rel="me">
+          <a href={href} rel={href.startsWith('http') ? 'me' : undefined}>
             {label}
           </a>
         </li>

@@ -11,7 +11,8 @@ const Element = href ? 'a' : 'span';
   href={href}
   class:list={[
     'inline-block rounded-full border border-surface-border px-3 py-0.5 font-mono text-sm text-on-surface no-underline',
-    href && 'hover:border-on-surface',
+    href &&
+      'hover:border-on-surface aria-[current=page]:border-action aria-[current=page]:bg-action aria-[current=page]:text-on-action',
     className,
   ]}
   {...attrs}

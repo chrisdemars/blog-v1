@@ -1,0 +1,21 @@
+---
+import Tag from './Tag.astro';
+import { tagSlug } from '../lib/blog';
+
+interface Props {
+  tags: string[];
+  label?: string;
+}
+
+const { tags, label = 'Tags' } = Astro.props;
+---
+
+{tags.length > 0 && (
+  <ul class="flex flex-wrap gap-2" aria-label={label}>
+    {tags.map((tag) => (
+      <li>
+        <Tag href={`/blog/tag/${tagSlug(tag)}/`}>{tag}</Tag>
+      </li>
+    ))}
+  </ul>
+)}
