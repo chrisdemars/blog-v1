@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets';
+import headshot from '../assets/headshot.jpg';
+import { SITE } from '../config';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<section class="section surface-primary" data-variant="primary">
+  <div class="mx-auto flex max-w-5xl items-center gap-5 px-4 py-10 sm:gap-6 sm:px-6 sm:py-14">
+    <Image
+      src={headshot}
+      alt=""
+      width={480}
+      class="size-20 shrink-0 rounded-full border-2 border-link object-cover object-[53%_30%] sm:size-28"
+    />
+    <div>
+      <p class="font-mono text-sm text-on-surface-muted">
+        {SITE.name} · {SITE.jobTitle}
+      </p>
+      <h1 class="mt-1 text-3xl font-bold tracking-tight sm:text-5xl">
+        {title}
+      </h1>
+    </div>
+  </div>
+</section>
