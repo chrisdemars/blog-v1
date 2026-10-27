@@ -1,0 +1,9 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../config';
+---
+
+<BaseLayout title={SITE.title} description={SITE.description}>
+  <h1>{SITE.name}</h1>
+  <p>{SITE.jobTitle}</p>
+</BaseLayout>
