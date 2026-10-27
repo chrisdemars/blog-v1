@@ -1,0 +1,28 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+// Renders an <a> when given an href, otherwise a <button>.
+type Props = { appearance?: 'solid' | 'outline' } & (
+  | ({ href: string } & HTMLAttributes<'a'>)
+  | ({ href?: never } & HTMLAttributes<'button'>)
+);
+
+const { appearance = 'solid', class: className, ...attrs } = Astro.props;
+const classes = [
+  'inline-flex items-center justify-center gap-2 rounded-md border-2 border-action px-5 py-2.5 font-semibold no-underline transition-colors',
+  appearance === 'solid'
+    ? 'bg-action text-on-action hover:bg-transparent hover:text-on-surface'
+    : 'bg-transparent text-on-surface hover:bg-action hover:text-on-action',
+  className,
+];
+---
+
+{'href' in attrs && attrs.href ? (
+  <a class:list={classes} {...(attrs as HTMLAttributes<'a'>)}>
+    <slot />
+  </a>
+) : (
+  <button class:list={classes} {...(attrs as HTMLAttributes<'button'>)}>
+    <slot />
+  </button>
+)}
