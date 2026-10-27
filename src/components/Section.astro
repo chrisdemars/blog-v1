@@ -1,9 +1,10 @@
 ---
 import type { HTMLAttributes } from 'astro/types';
+import { SURFACE_CLASS, type SurfaceVariant } from '../lib/surfaces';
 
 interface Props extends HTMLAttributes<'section'> {
   // Leave unset to alternate automatically with the sections around it.
-  variant?: 'primary' | 'secondary';
+  variant?: SurfaceVariant;
 }
 
 const { variant, class: className, ...attrs } = Astro.props;
@@ -12,7 +13,7 @@ const { variant, class: className, ...attrs } = Astro.props;
 <section
   class:list={[
     'section py-16 sm:py-24',
-    variant && `surface-${variant}`,
+    variant && SURFACE_CLASS[variant],
     className,
   ]}
   data-variant={variant}

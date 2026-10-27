@@ -8,9 +8,11 @@ import { SITE } from '../config';
 interface Props {
   title: string;
   description: string;
+  // Keeps the page out of search results (pair with the sitemap filter).
+  noindex?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, noindex = false } = Astro.props;
 const pageTitle = title === SITE.title ? title : `${title} | ${SITE.title}`;
 ---
 
@@ -24,6 +26,7 @@ const pageTitle = title === SITE.title ? title : `${title} | ${SITE.title}`;
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <ClientRouter />
   </head>
