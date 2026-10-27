@@ -1,0 +1,30 @@
+---
+import Card from './Card.astro';
+import PostMeta from './PostMeta.astro';
+import TagLinks from './TagLinks.astro';
+import type { Post } from '../lib/blog';
+
+interface Props {
+  post: Post;
+  headingLevel?: 2 | 3;
+}
+
+const { post, headingLevel = 2 } = Astro.props;
+const Heading = `h${headingLevel}` as const;
+---
+
+<Card class="flex h-full flex-col gap-3">
+  <PostMeta post={post} />
+  <Heading class="text-xl font-semibold">
+    <a
+      href={`/blog/${post.id}/`}
+      class="text-on-surface no-underline hover:underline"
+    >
+      {post.data.title}
+    </a>
+  </Heading>
+  <p class="text-on-surface-muted">{post.data.description}</p>
+  <div class="mt-auto pt-2">
+    <TagLinks tags={post.data.tags} />
+  </div>
+</Card>

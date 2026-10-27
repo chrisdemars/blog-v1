@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
+import { codeTheme } from './src/styles/code-theme.ts';
 
 // Netlify sets `URL` to the production URL on every build, including deploy
 // previews, so canonical links always point at the live site.
@@ -22,6 +23,9 @@ export default defineConfig({
         !hiddenPages.some((path) => new URL(page).pathname === path),
     }),
   ],
+  markdown: {
+    shikiConfig: { theme: codeTheme },
+  },
   vite: {
     plugins: [tailwindcss()],
   },

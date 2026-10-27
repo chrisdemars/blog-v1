@@ -11,6 +11,8 @@ const blog = defineCollection({
       pubDate: z.coerce.date(),
       updatedDate: z.coerce.date().optional(),
       heroImage: image().optional(),
+      // Leave empty when the image is decorative.
+      heroAlt: z.string().default(''),
       badge: z.string().optional(),
       tags: z
         .array(z.string())
@@ -18,6 +20,8 @@ const blog = defineCollection({
           message: 'tags must be unique',
         })
         .default([]),
+      // Drafts render in `astro dev` but are left out of production builds.
+      draft: z.boolean().default(false),
     }),
 });
 

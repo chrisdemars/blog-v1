@@ -1,0 +1,32 @@
+---
+import { formatDate, readingMinutes, type Post } from '../lib/blog';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { pubDate, updatedDate, badge } = post.data;
+---
+
+<p class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-sm text-on-surface-muted">
+  <time datetime={pubDate.toISOString()}>{formatDate(pubDate)}</time>
+  <span aria-hidden="true">·</span>
+  <span>{readingMinutes(post)} min read</span>
+  {updatedDate && (
+    <>
+      <span aria-hidden="true">·</span>
+      <span>
+        Updated{' '}
+        <time datetime={updatedDate.toISOString()}>
+          {formatDate(updatedDate)}
+        </time>
+      </span>
+    </>
+  )}
+  {badge && (
+    <span class="rounded-full bg-action px-2 py-0.5 font-semibold text-on-action">
+      {badge}
+    </span>
+  )}
+</p>

@@ -1,0 +1,53 @@
+---
+import type { Page } from 'astro';
+import PageLayout from '../layouts/PageLayout.astro';
+import Section from './Section.astro';
+import PostCard from './PostCard.astro';
+import Pagination from './Pagination.astro';
+import Tag from './Tag.astro';
+import type { Post, Tag as TagGroup } from '../lib/blog';
+
+interface Props {
+  title: string;
+  description: string;
+  page: Page<Post>;
+  tags: TagGroup[];
+  currentTag?: string;
+}
+
+const { title, description, page, tags, currentTag } = Astro.props;
+const pageTitle =
+  page.currentPage > 1 ? `${title} (page ${page.currentPage})` : title;
+---
+
+<PageLayout title={pageTitle} description={description}>
+  <Section aria-label="Posts">
+    <nav aria-label="Browse by tag">
+      <ul class="flex flex-wrap gap-2">
+        <li>
+          <Tag href="/blog/" aria-current={currentTag ? undefined : 'page'}>
+            All posts
+          </Tag>
+        </li>
+        {tags.map(({ slug, label, posts }) => (
+          <li>
+            <Tag
+              href={`/blog/tag/${slug}/`}
+              aria-current={slug === currentTag ? 'page' : undefined}
+            >
+              {label} ({posts.length})
+            </Tag>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <ul class="mt-10 grid gap-6 md:grid-cols-2">
+      {page.data.map((post) => (
+        <li>
+          <PostCard post={post} />
+        </li>
+      ))}
+    </ul>
+    <Pagination page={page} />
+  </Section>
+</PageLayout>

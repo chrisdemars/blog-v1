@@ -28,6 +28,13 @@ const pageTitle = title === SITE.title ? title : `${title} | ${SITE.title}`;
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${SITE.name}: Blog`}
+      href={new URL('rss.xml', Astro.site)}
+    />
+    <slot name="head" />
     <ClientRouter />
   </head>
   <body class="flex min-h-screen flex-col">
