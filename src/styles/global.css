@@ -52,6 +52,8 @@
   :root {
     @apply surface-primary;
     color-scheme: dark;
+    /* Keeps in-page anchor targets clear of the sticky nav. */
+    scroll-padding-top: 5rem;
   }
 
   body {

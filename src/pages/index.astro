@@ -1,33 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeHero from '../components/HomeHero.astro';
-import Section from '../components/Section.astro';
-import Card from '../components/Card.astro';
-import Button from '../components/Button.astro';
-import { SITE, SPEAKING_TOPICS } from '../config';
+import SpeakingTopics from '../components/SpeakingTopics.astro';
+import { SITE } from '../config';
 ---
 
 <BaseLayout title={SITE.title} description={SITE.description}>
   <HomeHero />
-  <Section aria-labelledby="topics-heading">
-    <h2 id="topics-heading" class="text-3xl font-bold">
-      What I speak about
-    </h2>
-    <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {SPEAKING_TOPICS.map(({ title, description }) => (
-        <li>
-          <Card class="h-full">
-            <h3 class="text-lg font-semibold">{title}</h3>
-            <p class="mt-2 text-on-surface-muted">{description}</p>
-          </Card>
-        </li>
-      ))}
-    </ul>
-    <div class="mt-8 flex flex-wrap gap-3">
-      <Button href="/talks">See my talks</Button>
-      <Button href="/schedule" appearance="outline">
-        Where I'm speaking next
-      </Button>
-    </div>
-  </Section>
+  <SpeakingTopics />
 </BaseLayout>

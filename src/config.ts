@@ -14,6 +14,8 @@ export const SOCIALS = {
   linkedin: 'https://www.linkedin.com/in/chrisdemars/',
   twitter: 'https://twitter.com/saltnburnem',
   sessionize: 'https://sessionize.com/chris-demars',
+  detroitjs: 'https://www.meetup.com/detroit-javascript/',
+  progressChampions: 'https://www.progress.com/champions',
 };
 
 // Used by the Conference Schedule loader (#10).
