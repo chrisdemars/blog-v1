@@ -1,13 +1,209 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 import Section from '../components/Section.astro';
+import SpeakingTopics from '../components/SpeakingTopics.astro';
+import Card from '../components/Card.astro';
+import Button from '../components/Button.astro';
+import Tag from '../components/Tag.astro';
+import { SITE, SOCIALS, SPEAKING_TOPICS } from '../config';
+import { getSpeakerBios } from '../lib/speakerBio';
+
+const bios = await getSpeakerBios();
+const headshot = '/chris-demars-headshot.jpg';
+
+const interests = [
+  'Competitive bass fishing',
+  'Paintball',
+  'Rating Detroit-style pizza',
+  'Searching for Bigfoot',
+  'UFOs, cryptids & ghosts',
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: {
+    '@type': 'Person',
+    name: SITE.name,
+    jobTitle: SITE.jobTitle,
+    description: bios?.long ?? SITE.description,
+    image: new URL(headshot, Astro.site).href,
+    url: Astro.site?.href,
+    homeLocation: {
+      '@type': 'Place',
+      name: 'Metro Detroit, Michigan, USA',
+    },
+    knowsAbout: SPEAKING_TOPICS.map(({ title }) => title),
+    sameAs: [
+      SOCIALS.github,
+      SOCIALS.linkedin,
+      SOCIALS.sessionize,
+      SOCIALS.twitter,
+    ],
+  },
+};
 ---
 
 <PageLayout
   title="About Me"
-  description="About Chris DeMars, Senior Developer Advocate and conference speaker."
+  description="Chris DeMars is a Senior Developer Advocate and international conference speaker from Metro Detroit, covering software supply chain security, accessibility, and frontend development."
 >
-  <Section>
-    <p>Coming soon (#6).</p>
+  <script
+    slot="head"
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(jsonLd)}
+  />
+  <Section aria-labelledby="intro-heading">
+    <div class="max-w-3xl space-y-5 text-lg leading-relaxed">
+      <h2 id="intro-heading" class="text-3xl font-bold">
+        Hi, I'm Chris
+      </h2>
+      <p>
+        I'm Chris DeMars, a front end developer with 20+ years of experience
+        crafting web experiences that are accessible, performant, and
+        user-focused. Since 2011, I've been working as a Developer Advocate in
+        some capacity—creating content, speaking at conferences, and helping
+        developers do their best work through tools, education, and community.
+        I've helped to found/co-found many Meetups here in Metro Detroit and
+        surrounding areas. Currently, I run the{' '}
+        <a href={SOCIALS.detroitjs}>DetroitJS Meetup</a>.
+      </p>
+      <p>
+        Over the years, I've built a speaking career that's taken me all over
+        the world to share insights on front-end development, accessibility, and
+        developer experience. I've written dozens of{' '}
+        <a href="/blog/">blog posts</a> aimed at helping developers level up
+        their skills, whether it's diving deep into technical topics or offering
+        guidance on tooling and workflow. I'm also proud to be a current{' '}
+        <a href={SOCIALS.progressChampions}>Progress Champion</a>, recognized
+        for my contributions to the tech community and my continued support of
+        the developer ecosystem.
+      </p>
+    </div>
+  </Section>
+
+  <SpeakingTopics />
+
+  <Section aria-labelledby="outside-heading">
+    <div class="max-w-3xl space-y-5 text-lg leading-relaxed">
+      <h2 id="outside-heading" class="text-3xl font-bold">
+        Outside of work
+      </h2>
+      <p>
+        Outside of tech and tournament trails, I have a deep curiosity for the
+        paranormal—UFOs, cryptids, and ghosts are all right up my alley. I spend
+        a lot of time researching strange phenomena, reading about sightings,
+        and mapping out events that fall along the 37th parallel. Whether it's
+        tracking down something elusive in the woods, on the water, or online,
+        I'm always chasing the next mystery.
+      </p>
+      <ul class="flex flex-wrap gap-2 text-base" aria-label="Interests">
+        {interests.map((interest) => (
+          <li>
+            <Tag>{interest}</Tag>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </Section>
+
+  <Section aria-labelledby="kit-heading">
+    <h2 id="kit-heading" class="text-3xl font-bold">
+      Speaker kit
+    </h2>
+    <p class="mt-2 max-w-prose text-on-surface-muted">
+      For event organizers: a bio and headshot ready for your program and
+      speaker page.
+    </p>
+    <div class="mt-8 grid gap-6 lg:grid-cols-[1fr_16rem]">
+      <div class="grid gap-6">
+        {bios ? (
+          [
+            { id: 'short-bio', label: 'Short bio', text: bios.short },
+            { id: 'long-bio', label: 'Long bio', text: bios.long },
+          ].map(({ id, label, text }) => (
+            <Card>
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <h3 class="text-lg font-semibold">{label}</h3>
+                <Button
+                  type="button"
+                  appearance="outline"
+                  class="copy-bio px-3 py-1.5 text-sm"
+                  data-copy-target={id}
+                  aria-describedby="copy-status"
+                >
+                  Copy {label.toLowerCase()}
+                </Button>
+              </div>
+              <p id={id} class="mt-3 text-on-surface-muted">
+                {text}
+              </p>
+            </Card>
+          ))
+        ) : (
+          <Card>
+            <p>
+              Bios are on <a href={SOCIALS.sessionize}>my Sessionize profile</a>
+              .
+            </p>
+          </Card>
+        )}
+        <p
+          id="copy-status"
+          class="sr-only"
+          role="status"
+          aria-live="polite"
+        ></p>
+      </div>
+      <Card class="flex flex-col items-start gap-4">
+        <h3 class="text-lg font-semibold">Headshot</h3>
+        <img
+          src={headshot}
+          alt="Chris DeMars in a Detroit cap and teal mirrored sunglasses"
+          width="272"
+          height="272"
+          loading="lazy"
+          class="w-full rounded-lg"
+        />
+        <Button href={headshot} download="chris-demars-headshot.jpg">
+          Download headshot
+        </Button>
+      </Card>
+    </div>
   </Section>
 </PageLayout>
+
+<script>
+  // Copies a bio to the clipboard. The button label confirms it visually and
+  // the live region announces it to screen readers.
+  function setUpCopyButtons() {
+    const status = document.getElementById('copy-status');
+    document
+      .querySelectorAll<HTMLButtonElement>('.copy-bio')
+      .forEach((button) => {
+        const label = button.textContent?.trim() ?? '';
+        const name = label.replace(/^Copy /, '');
+        button.addEventListener('click', async () => {
+          const target = document.getElementById(
+            button.dataset.copyTarget ?? '',
+          );
+          if (!target || !status) return;
+          try {
+            await navigator.clipboard.writeText(
+              target.textContent?.trim() ?? '',
+            );
+            button.textContent = 'Copied!';
+            status.textContent = `${name} copied to clipboard.`;
+          } catch {
+            button.textContent = 'Copy failed';
+            status.textContent =
+              'Copy failed. Select the text to copy it instead.';
+          }
+          setTimeout(() => (button.textContent = label), 2000);
+        });
+      });
+  }
+
+  document.addEventListener('astro:page-load', setUpCopyButtons);
+</script>
