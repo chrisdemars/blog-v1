@@ -1,0 +1,64 @@
+# Work history for /resume. The page sorts it: current roles first, then by `end`.
+# Dates are YYYY-MM. Leave `end` out for a current role.
+
+- id: tuxcare
+  title: Lead/Senior Developer Advocate
+  company: TuxCare
+  start: 2025-06
+  highlights:
+    - Build and nurture developer communities around frontend ecosystems and cybersecurity through social channels, meetups, and online platforms.
+    - Technical Video Specialist and Producer for VerboseMode Stream. I coordinated the setup of A/V equipment and produced episodes.
+    - Create and curate the TuxCare newsletter that is sent on a monthly cadence.
+    - Contributed to increased followers across socials by 8%.
+    - Create training decks and videos on end-of-life support solutions for JavaScript as well as package management best practices for JavaScript, Python, and Ruby.
+    - Author technical content, including blogs, tutorials, and videos, on JavaScript security, frontend frameworks, and software supply chain best practices.
+    - Speak at conferences and user groups on secure JavaScript development, SBOMs, and frontend frameworks.
+    - Collaborate with marketing, product, and engineering teams to align DevRel initiatives with company goals and improve developer experience.
+    - Launched and hosted TuxCare’s weekly Twitch streams featuring live coding, expert interviews, and community Q&A.
+    - Lead the execution of DevRel strategies and community-driven campaigns while fostering collaboration across internal teams.
+
+- id: digitalocean
+  title: Senior Developer Advocate II
+  company: DigitalOcean
+  start: 2024-02
+  end: 2025-02
+  highlights:
+    - Contributed to the revitalization of CSS-Tricks through content creation and blogging initiatives.
+    - Delivered workshops and technical presentations at industry conferences, focusing on Cloud and Generative AI technologies.
+    - Launched and led Twitch streaming initiatives, including CloudChats, in collaboration with the Developer Relations team.
+    - Consistently met and exceeded forecasted performance targets by 100%.
+    - Produced and curated digital content for DigitalOcean initiatives, including YouTube videos, YouTube Shorts, and various social media platforms.
+    - Played a key role in leading the Hacktoberfest initiative, serving as the Master of Ceremonies for both the opening and closing sessions.
+    - Established robust methodologies for monitoring both qualitative and quantitative metrics to gauge performance effectively.
+    - Collaborated closely with the App Platform team, contributing to community engagement efforts and influencing strategic roadmap decisions.
+    - Co-hosted a highly successful webinar in partnership with Tabnine and DigitalOcean, showcasing project scaffolding techniques and deployment strategies on the App Platform.
+    - Fostered cross-functional collaboration across organizational teams to ensure alignment with community-centric objectives and goals.
+
+- id: harness
+  title: Senior Developer Advocate
+  company: Harness
+  start: 2024-09
+  end: 2024-11
+  highlights:
+    - Strategized and implemented a comprehensive Content Distribution Strategy tailored to engage and strengthen community interactions.
+    - Delivered engaging presentations on diverse web technologies to educate and inspire audiences.
+    - Authored in-depth tutorials focusing on DevOps methodologies, enhancing understanding and proficiency within the community.
+    - Produced informative and engaging video content covering a range of DevOps topics to facilitate learning and knowledge sharing.
+    - Contributed insightful blog posts addressing a spectrum of web and software technologies, enriching industry discourse and knowledge dissemination.
+    - Actively championed web accessibility principles and practices, fostering awareness and understanding across organizational teams to promote inclusivity and user-centric design.
+
+- id: split
+  title: DevRel Lead
+  company: Split Software
+  start: 2022-09
+  end: 2023-06
+  highlights:
+    - Created and implemented Developer Relations Strategy (End of FY23 & FY24) from the ground up.
+    - Built out a system to measure impact and track successes.
+    - Delivered talks at 17 conferences/meetups, including internationally.
+    - Co-hosted Split’s most successful webinar to date, created in collaboration with Forrester on the state of our emerging market.
+    - Produced content (promo videos) for webinars and Split’s Conference - Flagship 23.
+    - Published multiple blog posts on web and software technologies.
+    - Continuously advocated and shared web accessibility knowledge across teams within the organization.
+    - Hosted Twitter Spaces around Developer Relations topics.
+    - Streamed various front-end topics on the Split Twitch stream.

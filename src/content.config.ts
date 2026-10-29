@@ -1,5 +1,5 @@
 import { defineCollection } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { file, glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 const blog = defineCollection({
@@ -25,4 +25,29 @@ const blog = defineCollection({
     }),
 });
 
-export const collections = { blog };
+// YYYY-MM, as written in experience.yaml (YAML would read 2024-02 as a string).
+const yearMonth = z
+  .union([z.string(), z.date()])
+  .transform((value) =>
+    value instanceof Date ? value.toISOString().slice(0, 7) : value,
+  )
+  .pipe(z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, 'use YYYY-MM'));
+
+const experience = defineCollection({
+  loader: file('src/data/experience.yaml'),
+  schema: z
+    .object({
+      title: z.string(),
+      company: z.string(),
+      location: z.string().optional(),
+      start: yearMonth,
+      // Leave out for a current role.
+      end: yearMonth.optional(),
+      highlights: z.array(z.string()).default([]),
+    })
+    .refine(({ start, end }) => !end || end >= start, {
+      message: 'end must not be before start',
+    }),
+});
+
+export const collections = { blog, experience };

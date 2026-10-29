@@ -1,13 +1,102 @@
 ---
+import { getCollection } from 'astro:content';
 import PageLayout from '../layouts/PageLayout.astro';
 import Section from '../components/Section.astro';
+import Timeline from '../components/Timeline.astro';
+import Card from '../components/Card.astro';
+import Tag from '../components/Tag.astro';
+import Button from '../components/Button.astro';
+import { EDUCATION, PROFILE, RECOGNITION, SKILLS } from '../data/resume';
+
+// Most recent first: current roles (no end), then by end, then by start.
+// YYYY-MM strings sort correctly as text.
+const jobs = (await getCollection('experience')).sort(
+  (a, b) =>
+    (b.data.end ?? '9999-99').localeCompare(a.data.end ?? '9999-99') ||
+    b.data.start.localeCompare(a.data.start),
+);
 ---
 
 <PageLayout
   title="Resume"
-  description="Resume of Chris DeMars, Senior Developer Advocate."
+  description="Resume of Chris DeMars, Senior Developer Advocate: developer relations, conference speaking, and frontend engineering experience."
 >
-  <Section>
-    <p>Coming soon (#7).</p>
+  <Section aria-labelledby="profile-heading">
+    <div class="flex flex-wrap items-start justify-between gap-6">
+      <h2 id="profile-heading" class="text-3xl font-bold">
+        Profile
+      </h2>
+      <Button
+        type="button"
+        appearance="outline"
+        class="print-resume print:hidden"
+      >
+        Print or save as PDF
+      </Button>
+    </div>
+    <p class="mt-6 max-w-3xl text-lg leading-relaxed">{PROFILE}</p>
+  </Section>
+
+  <Section aria-labelledby="experience-heading">
+    <h2 id="experience-heading" class="text-3xl font-bold">
+      Experience
+    </h2>
+    <div class="mt-10 max-w-3xl">
+      <Timeline jobs={jobs} />
+    </div>
+  </Section>
+
+  <Section aria-labelledby="education-heading">
+    <div class="grid gap-10 md:grid-cols-2">
+      <div>
+        <h2 id="education-heading" class="text-3xl font-bold">
+          Education
+        </h2>
+        <ul class="mt-6 space-y-4">
+          {EDUCATION.map(({ school, location }) => (
+            <li>
+              <Card>
+                <h3 class="text-lg font-semibold">{school}</h3>
+                <p class="mt-1 text-on-surface-muted">{location}</p>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h2 id="recognition-heading" class="text-3xl font-bold">
+          Recognition
+        </h2>
+        <ul
+          class="mt-6 list-disc space-y-2 pl-5"
+          aria-labelledby="recognition-heading"
+        >
+          {RECOGNITION.map(({ name, url }) => (
+            <li>{url ? <a href={url}>{name}</a> : name}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <Section aria-labelledby="skills-heading">
+    <h2 id="skills-heading" class="text-3xl font-bold">
+      Skills
+    </h2>
+    <ul class="mt-6 flex flex-wrap gap-2" aria-labelledby="skills-heading">
+      {SKILLS.map((skill) => (
+        <li>
+          <Tag>{skill}</Tag>
+        </li>
+      ))}
+    </ul>
   </Section>
 </PageLayout>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    document
+      .querySelector('.print-resume')
+      ?.addEventListener('click', () => window.print());
+  });
+</script>
