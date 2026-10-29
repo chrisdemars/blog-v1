@@ -155,3 +155,38 @@
     @apply rounded-lg;
   }
 }
+
+/*
+ * Print: black on white everywhere (mainly for /resume). Custom properties
+ * are overridden with !important so surface utilities can't win.
+ */
+@media print {
+  * {
+    --surface: #fff !important;
+    --surface-raised: #fff !important;
+    --surface-border: #999 !important;
+    --on-surface: #000 !important;
+    --on-surface-muted: #333 !important;
+    --link: #000 !important;
+    --action: #000 !important;
+    --on-action: #fff !important;
+  }
+
+  body {
+    font-size: 11pt;
+  }
+
+  .section {
+    @apply py-6;
+  }
+
+  h1,
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  li {
+    break-inside: avoid;
+  }
+}

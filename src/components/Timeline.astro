@@ -1,0 +1,51 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  jobs: CollectionEntry<'experience'>[];
+}
+
+const { jobs } = Astro.props;
+
+const monthFormat = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  year: 'numeric',
+  timeZone: 'UTC',
+});
+const formatMonth = (yearMonth: string) =>
+  monthFormat.format(new Date(`${yearMonth}-01T00:00:00Z`));
+---
+
+<ol class="relative border-l-2 border-surface-border">
+  {jobs.map(({ data }) => (
+    <li class="relative pb-12 pl-8 last:pb-0 print:pb-6">
+      <span
+        class="absolute top-1.5 -left-[9px] size-4 rounded-full border-2 border-surface bg-link"
+        aria-hidden="true"
+      />
+      <article>
+        <h3 class="text-xl font-semibold print:break-after-avoid">
+          {data.title} <span class="text-on-surface-muted">@</span>{' '}
+          {data.company}
+        </h3>
+        <p class="mt-1 font-mono text-sm text-on-surface-muted print:break-after-avoid">
+          <time datetime={data.start}>{formatMonth(data.start)}</time>
+          {' – '}
+          {data.end ? (
+            <time datetime={data.end}>{formatMonth(data.end)}</time>
+          ) : (
+            'Present'
+          )}
+          {data.location && <> · {data.location}</>}
+        </p>
+        {data.highlights.length > 0 && (
+          <ul class="mt-4 list-disc space-y-2 pl-5 marker:text-link">
+            {data.highlights.map((highlight) => (
+              <li>{highlight}</li>
+            ))}
+          </ul>
+        )}
+      </article>
+    </li>
+  ))}
+</ol>
