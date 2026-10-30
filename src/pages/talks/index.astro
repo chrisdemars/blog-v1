@@ -1,0 +1,62 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Section from '../../components/Section.astro';
+import Card from '../../components/Card.astro';
+import Tag from '../../components/Tag.astro';
+import Button from '../../components/Button.astro';
+import { getTalksByTopic } from '../../lib/talks';
+
+const groups = await getTalksByTopic();
+---
+
+<PageLayout
+  title="Conference Talks"
+  description="Conference talks by Chris DeMars on software supply chain security, accessibility, and frontend development."
+>
+  {groups.length === 0 ? (
+    <Section>
+      <p class="text-lg">Talks are on their way. Check back soon.</p>
+    </Section>
+  ) : (
+    groups.map(({ id, title, description, talks }) => (
+      <Section aria-labelledby={`topic-${id}`}>
+        <h2 id={`topic-${id}`} class="text-3xl font-bold">
+          {title}
+        </h2>
+        <p class="mt-2 max-w-prose text-on-surface-muted">{description}</p>
+        <ul class="mt-8 grid gap-4 md:grid-cols-2">
+          {talks.map((talk) => (
+            <li>
+              <Card class="flex h-full flex-col gap-3">
+                {talk.data.featured && (
+                  <p>
+                    <Tag>Featured</Tag>
+                  </p>
+                )}
+                <h3 class="text-xl font-semibold">
+                  <a
+                    href={`/talks/${talk.id}/`}
+                    class="text-on-surface no-underline hover:underline"
+                  >
+                    {talk.data.title}
+                  </a>
+                </h3>
+                <p class="line-clamp-4 text-on-surface-muted">
+                  {talk.data.excerpt}
+                </p>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </Section>
+    ))
+  )}
+  <Section>
+    <p class="max-w-prose text-lg">
+      Want one of these at your event, or something tailored to your audience?
+    </p>
+    <div class="mt-6">
+      <Button href="#contact">Book a talk</Button>
+    </div>
+  </Section>
+</PageLayout>

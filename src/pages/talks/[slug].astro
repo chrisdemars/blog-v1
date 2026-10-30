@@ -1,0 +1,46 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+import Section from '../../components/Section.astro';
+import Tag from '../../components/Tag.astro';
+import Button from '../../components/Button.astro';
+import { getTopicTitle, toMetaDescription, type Talk } from '../../lib/talks';
+
+export const getStaticPaths = (async () => {
+  const talks = await getCollection('talks');
+  return talks.map((talk) => ({ params: { slug: talk.id }, props: { talk } }));
+}) satisfies GetStaticPaths;
+
+const { talk } = Astro.props as { talk: Talk };
+const { Content } = await render(talk);
+---
+
+<PageLayout
+  title={talk.data.title}
+  description={toMetaDescription(talk.data.excerpt)}
+>
+  <Section variant="primary">
+    <article class="mx-auto max-w-3xl">
+      <a href="/talks/" class="font-mono text-sm">
+        ← All talks
+      </a>
+      <ul class="mt-6 flex flex-wrap gap-2" aria-label="Topics">
+        {talk.data.topics.map((topic) => (
+          <li>
+            <Tag>{getTopicTitle(topic)}</Tag>
+          </li>
+        ))}
+      </ul>
+      <div class="prose prose-lg prose-surface mt-8 max-w-none">
+        <Content />
+      </div>
+      <div class="mt-10 flex flex-wrap gap-3">
+        <Button href="#contact">Book this talk</Button>
+        <Button href="/talks/" appearance="outline">
+          More talks
+        </Button>
+      </div>
+    </article>
+  </Section>
+</PageLayout>
