@@ -4,28 +4,30 @@
 @plugin '@tailwindcss/typography';
 
 /*
- * Palette: black and shades of green (#30). The comment on each token is
- * its role, shown on /design-system. scripts/check-contrast.mjs reads these
- * values, so keep them as plain hex.
+ * Palette: coolors.co/palette/1f2421-216869-49a078-9cc5a1-dce1de (#30).
+ * Jet, celadon and platinum are used as-is. Caribbean current (#216869) and
+ * mint (#49a078) fail AA as text on jet, so text uses lifted shades of them.
+ * The comment on each token is its role, shown on /design-system.
+ * scripts/check-contrast.mjs reads these values, so keep them as plain hex.
  */
 @theme {
-  --color-primary: #040806; /* near-black, hint of green */
-  --color-primary-raised: #0b1a11; /* cards and code on black */
-  --color-primary-border: #275236; /* borders on black */
-  --color-on-primary: #e3f5e8; /* text on black, mint-tinted */
-  --color-on-primary-muted: #a3c4ad; /* secondary text on black */
+  --color-primary: #1f2421; /* jet */
+  --color-primary-raised: #272c29; /* cards and code on jet */
+  --color-primary-border: #398a72; /* borders on jet, current/mint blend */
+  --color-on-primary: #dce1de; /* text on jet (platinum) */
+  --color-on-primary-muted: #adb2af; /* secondary text on jet */
 
-  --color-secondary: #3ee07f; /* signature green */
-  --color-secondary-raised: #86eeb0; /* cards on green */
-  --color-secondary-border: #14532d; /* borders on green */
-  --color-on-secondary: #040806; /* text on green (black) */
-  --color-on-secondary-muted: #123f24; /* secondary text on green (forest) */
+  --color-secondary: #9cc5a1; /* celadon */
+  --color-secondary-raised: #dce1de; /* cards on celadon (platinum) */
+  --color-secondary-border: #216869; /* borders on celadon (caribbean current) */
+  --color-on-secondary: #1f2421; /* text on celadon (jet) */
+  --color-on-secondary-muted: #204d4c; /* secondary text on celadon, deep current */
 
-  /* Green accents, only used on primary (black) surfaces. */
-  --color-accent-teal: #35d6b5; /* blue-green */
-  --color-accent-moss: #8fcf6b; /* moss */
-  --color-accent-lime: #b5f04a; /* lime */
-  --color-accent-mint: #a6f5c6; /* pale mint */
+  /* Accents, only used on primary (jet) surfaces. */
+  --color-accent-teal: #759e9e; /* caribbean current, lifted */
+  --color-accent-green: #5ba884; /* mint, lifted */
+  --color-accent-celadon: #9cc5a1; /* celadon */
+  --color-accent-mist: #a4bdbb; /* current/platinum blend */
 
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Source Code Pro Variable', ui-monospace, monospace;
