@@ -1,0 +1,161 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Section from '../../components/Section.astro';
+import Card from '../../components/Card.astro';
+import Tag from '../../components/Tag.astro';
+import Button from '../../components/Button.astro';
+import { SITE } from '../../config';
+import {
+  formatEventDates,
+  getSchedule,
+  hasExactDates,
+  type SpeakingEvent,
+} from '../../lib/events';
+
+const { upcoming, past } = await getSchedule();
+
+// Past events grouped by year, newest first.
+const pastByYear = Object.entries(
+  Object.groupBy(past, (event) => event.data.start.slice(0, 4)),
+).sort(([a], [b]) => b.localeCompare(a));
+
+const place = ({ data }: SpeakingEvent) =>
+  data.virtual ? 'Virtual' : data.location;
+
+// Event structured data for upcoming events (#12).
+const jsonLd = upcoming.map(({ data }) => ({
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: data.name,
+  startDate: data.start,
+  ...(data.end && { endDate: data.end }),
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: data.virtual
+    ? 'https://schema.org/OnlineEventAttendanceMode'
+    : 'https://schema.org/OfflineEventAttendanceMode',
+  location: data.virtual
+    ? { '@type': 'VirtualLocation', url: data.url }
+    : { '@type': 'Place', name: data.location, address: data.location },
+  ...(data.url && { url: data.url }),
+  performer: { '@type': 'Person', name: SITE.name, url: Astro.site?.href },
+}));
+---
+
+<PageLayout
+  title="Conference Schedule"
+  description="Upcoming conferences and events where Chris DeMars is speaking about software supply chain security, accessibility, and frontend engineering."
+>
+  {jsonLd.length > 0 && (
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(jsonLd)}
+    />
+  )}
+  <Section aria-labelledby="upcoming-heading">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <h2 id="upcoming-heading" class="text-3xl font-bold">
+        Upcoming
+      </h2>
+      <a href="/schedule.ics" class="font-mono text-sm">
+        Subscribe to calendar (.ics)
+      </a>
+    </div>
+    {upcoming.length === 0 ? (
+      <p class="mt-6 text-lg">
+        Nothing scheduled right now.{' '}
+        <a href="#contact">Invite me to your event</a>.
+      </p>
+    ) : (
+      <ul class="mt-8 grid gap-4 md:grid-cols-2">
+        {upcoming.map((event) => (
+          <li>
+            <Card class="flex h-full flex-col gap-3">
+              <p class="font-mono text-sm text-on-surface-muted">
+                <time datetime={event.data.start}>
+                  {formatEventDates(event)}
+                </time>
+              </p>
+              <h3 class="text-xl font-semibold">
+                {event.data.url ? (
+                  <a
+                    href={event.data.url}
+                    class="text-on-surface no-underline hover:underline"
+                  >
+                    {event.data.name}
+                  </a>
+                ) : (
+                  event.data.name
+                )}
+              </h3>
+              {place(event) && (
+                <p class="text-on-surface-muted">{place(event)}</p>
+              )}
+              {event.data.talk && (
+                <p>
+                  <a href={`/talks/${event.data.talk}/`}>About the talk</a>
+                </p>
+              )}
+              {hasExactDates(event) && (
+                <div class="mt-auto pt-2">
+                  <Button
+                    href={`/schedule/${event.id}.ics`}
+                    appearance="outline"
+                    download
+                  >
+                    Add to calendar
+                  </Button>
+                </div>
+              )}
+            </Card>
+          </li>
+        ))}
+      </ul>
+    )}
+  </Section>
+
+  {pastByYear.length > 0 && (
+    <Section aria-labelledby="past-heading">
+      <h2 id="past-heading" class="text-3xl font-bold">
+        Past events
+      </h2>
+      <div class="mt-8 grid gap-10">
+        {pastByYear.map(([year, events]) => (
+          <div>
+            <h3 class="font-mono text-lg font-semibold">{year}</h3>
+            <ul class="mt-4 divide-y divide-surface-border border-y border-surface-border">
+              {events!.map((event) => (
+                <li class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-3">
+                  <span class="font-semibold">
+                    {event.data.url ? (
+                      <a href={event.data.url}>{event.data.name}</a>
+                    ) : (
+                      event.data.name
+                    )}
+                  </span>
+                  <span class="text-on-surface-muted">
+                    {[formatEventDates(event), place(event)]
+                      .filter(Boolean)
+                      .join(' · ')}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </Section>
+  )}
+
+  <Section>
+    <p class="max-w-prose text-lg">
+      Want me at your conference, meetup, or podcast?
+    </p>
+    <div class="mt-6 flex flex-wrap gap-3">
+      <Button href="#contact">Invite me to speak</Button>
+      <Button href="/talks/" appearance="outline">
+        See my talks
+      </Button>
+    </div>
+  </Section>
+</PageLayout>
