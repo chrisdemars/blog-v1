@@ -60,7 +60,7 @@ export const CONTRAST_PAIRS: ContrastPair[] = [
   pair('secondary', 'on-secondary', 4.5, 'Solid button on green'),
   pair('secondary', 'primary', 3, 'Focus ring on dark'),
   pair('on-secondary', 'secondary', 3, 'Focus ring on green'),
-  ...['blue', 'purple', 'pink', 'yellow'].flatMap((accent) => [
+  ...['teal', 'moss', 'lime', 'mint'].flatMap((accent) => [
     pair(`accent-${accent}`, 'primary', 4.5, 'Accent on dark'),
     pair(`accent-${accent}`, 'primary-raised', 4.5, 'Accent in dark cards'),
     pair(

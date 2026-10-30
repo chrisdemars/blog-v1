@@ -1,32 +1,33 @@
 import type { ThemeRegistration } from 'shiki';
 
-// Syntax highlighting built from the site palette. Every color passes WCAG AA
+// Syntax highlighting built from the site's greens: keywords lime, strings
+// green, functions teal, constants mint, types moss. Every color passes WCAG AA
 // on --color-primary-raised (see /design-system).
 export const codeTheme = {
-  name: 'spacetime',
+  name: 'black-and-green',
   type: 'dark' as const,
   colors: {
-    'editor.background': '#122129',
-    'editor.foreground': '#e6e9f0',
+    'editor.background': '#0b1a11',
+    'editor.foreground': '#e3f5e8',
   },
   tokenColors: [
     {
       scope: ['comment', 'punctuation.definition.comment'],
       settings: {
-        foreground: '#b6c0cf',
+        foreground: '#a3c4ad',
         fontStyle: 'italic',
       },
     },
     {
       scope: ['keyword', 'storage', 'storage.type', 'keyword.operator.new'],
       settings: {
-        foreground: '#ff80fb',
+        foreground: '#b5f04a',
       },
     },
     {
       scope: ['string', 'string.quoted', 'markup.inline.raw'],
       settings: {
-        foreground: '#4cf490',
+        foreground: '#3ee07f',
       },
     },
     {
@@ -37,7 +38,7 @@ export const codeTheme = {
         'entity.name.tag',
       ],
       settings: {
-        foreground: '#02befa',
+        foreground: '#35d6b5',
       },
     },
     {
@@ -48,7 +49,7 @@ export const codeTheme = {
         'variable.other.constant',
       ],
       settings: {
-        foreground: '#fbdc8e',
+        foreground: '#a6f5c6',
       },
     },
     {
@@ -60,7 +61,7 @@ export const codeTheme = {
         'entity.other.attribute-name',
       ],
       settings: {
-        foreground: '#a880ff',
+        foreground: '#8fcf6b',
       },
     },
     {

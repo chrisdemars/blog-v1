@@ -4,28 +4,28 @@
 @plugin '@tailwindcss/typography';
 
 /*
- * Palette, matched to spacetimedb.com. The comment on each token names the
- * SpacetimeDB variable it came from. scripts/check-contrast.mjs reads these
+ * Palette: black and shades of green (#30). The comment on each token is
+ * its role, shown on /design-system. scripts/check-contrast.mjs reads these
  * values, so keep them as plain hex.
  */
 @theme {
-  --color-primary: #0b1114; /* --color-shade7 */
-  --color-primary-raised: #122129; /* --color-shade3 */
-  --color-primary-border: #363840; /* --color-n5 */
-  --color-on-primary: #e6e9f0; /* --color-n1 */
-  --color-on-primary-muted: #b6c0cf; /* --color-n3 */
+  --color-primary: #040806; /* near-black, hint of green */
+  --color-primary-raised: #0b1a11; /* cards and code on black */
+  --color-primary-border: #275236; /* borders on black */
+  --color-on-primary: #e3f5e8; /* text on black, mint-tinted */
+  --color-on-primary-muted: #a3c4ad; /* secondary text on black */
 
-  --color-secondary: #4cf490; /* --color-green */
-  --color-secondary-raised: #7ff7b0; /* --color-green, lightened for cards */
-  --color-secondary-border: #1e5e3a; /* --color-green, darkened for borders */
-  --color-on-secondary: #0b1114; /* --color-shade7 */
-  --color-on-secondary-muted: #1e3a2a; /* --color-shade7, tinted green */
+  --color-secondary: #3ee07f; /* signature green */
+  --color-secondary-raised: #86eeb0; /* cards on green */
+  --color-secondary-border: #14532d; /* borders on green */
+  --color-on-secondary: #040806; /* text on green (black) */
+  --color-on-secondary-muted: #123f24; /* secondary text on green (forest) */
 
-  /* Accents are only used on primary (dark) surfaces. */
-  --color-accent-blue: #02befa; /* --color-blue */
-  --color-accent-purple: #a880ff; /* --color-purple */
-  --color-accent-pink: #ff80fb; /* --color-pink */
-  --color-accent-yellow: #fbdc8e; /* --color-yellow */
+  /* Green accents, only used on primary (black) surfaces. */
+  --color-accent-teal: #35d6b5; /* blue-green */
+  --color-accent-moss: #8fcf6b; /* moss */
+  --color-accent-lime: #b5f04a; /* lime */
+  --color-accent-mint: #a6f5c6; /* pale mint */
 
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Source Code Pro Variable', ui-monospace, monospace;
