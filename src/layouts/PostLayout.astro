@@ -48,13 +48,11 @@ const jsonLd = {
   />
   <Section variant="primary">
     <article class="mx-auto max-w-3xl">
-      <header>
+      <header class="@container">
         <a href="/blog/" class="font-mono text-sm">
           ← All posts
         </a>
-        <h1 class="mt-6 text-3xl tracking-tight text-balance sm:text-5xl">
-          {title}
-        </h1>
+        <h1 class="mt-6 text-title text-balance">{title}</h1>
         <p class="mt-4 text-lg text-on-surface-muted">{description}</p>
         <div class="mt-6 flex flex-col gap-4">
           <PostMeta post={post} />
@@ -80,7 +78,7 @@ const jsonLd = {
 
   {related.length > 0 && (
     <Section variant="secondary" aria-labelledby="related-heading">
-      <h2 id="related-heading" class="text-3xl">
+      <h2 id="related-heading" class="text-section">
         Related posts
       </h2>
       <ul class="mt-8 grid gap-6 md:grid-cols-3">
