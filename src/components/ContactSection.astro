@@ -1,0 +1,260 @@
+---
+import Section from './Section.astro';
+import Button from './Button.astro';
+
+// Shared input styling. The border uses the muted text color so field
+// edges keep 3:1 contrast on both surfaces.
+const field =
+  'mt-2 block w-full rounded-md border-2 border-on-surface-muted bg-surface-raised px-3 py-2 text-on-surface aria-invalid:border-on-surface aria-invalid:border-[3px]';
+const label = 'block font-semibold';
+const error = 'field-error mt-2 text-sm font-semibold empty:hidden';
+const optional = 'font-normal text-on-surface-muted';
+
+const inquiryTypes = [
+  { value: 'speaking', label: 'Speaking engagement' },
+  { value: 'work', label: 'Work with me' },
+  { value: 'other', label: 'Other' },
+];
+---
+
+<Section id="contact" aria-labelledby="contact-heading" class="print:hidden">
+  <div class="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
+    <div>
+      <h2 id="contact-heading" class="text-3xl font-bold">
+        Speak at my event or work with me
+      </h2>
+      <p class="mt-4 max-w-prose text-lg text-on-surface-muted">
+        Tell me about your conference, meetup, podcast, or project. I'll get
+        back to you within a few days.
+      </p>
+    </div>
+
+    <!--
+      Netlify Forms picks this up at deploy time (name + data-netlify).
+      data-astro-reload skips the client router so the POST is a normal
+      submission. Without JS, the browser's own validation runs.
+    -->
+    <form
+      name="contact"
+      method="POST"
+      action="/thanks/"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      data-astro-reload
+      class="contact-form grid gap-6"
+    >
+      <input type="hidden" name="form-name" value="contact" />
+      <p class="hidden">
+        <label>
+          Leave this empty:{' '}
+          <input name="bot-field" tabindex="-1" autocomplete="off" />
+        </label>
+      </p>
+
+      <div class="grid gap-6 sm:grid-cols-2">
+        <div>
+          <label for="contact-name" class={label}>
+            Name
+          </label>
+          <input
+            id="contact-name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            required
+            data-error="Enter your name."
+            aria-describedby="contact-name-error"
+            class={field}
+          />
+          <p id="contact-name-error" class={error}></p>
+        </div>
+        <div>
+          <label for="contact-email" class={label}>
+            Email
+          </label>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+            data-error="Enter an email address, like name@example.com."
+            aria-describedby="contact-email-error"
+            class={field}
+          />
+          <p id="contact-email-error" class={error}></p>
+        </div>
+      </div>
+
+      <div>
+        <label for="contact-organization" class={label}>
+          Organization <span class={optional}>(optional)</span>
+        </label>
+        <input
+          id="contact-organization"
+          name="organization"
+          type="text"
+          autocomplete="organization"
+          class={field}
+        />
+      </div>
+
+      <fieldset aria-describedby="contact-inquiry-error">
+        <legend class={label}>What can I help with?</legend>
+        <p id="contact-inquiry-error" class={error}></p>
+        <div class="mt-3 flex flex-wrap gap-x-6 gap-y-3">
+          {inquiryTypes.map(({ value, label: text }, i) => (
+            <label class="flex items-center gap-2">
+              <input
+                type="radio"
+                name="inquiry"
+                value={value}
+                required={i === 0}
+                data-error={
+                  i === 0 ? "Choose what you're reaching out about." : undefined
+                }
+                class="size-5 accent-action"
+              />
+              {text}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <!-- Shown only for speaking requests (CSS :has, so no JS needed). -->
+      <fieldset class="speaking-fields grid gap-6 rounded-lg border-2 border-surface-border p-4 sm:grid-cols-2 sm:p-6">
+        <legend class="px-2 font-semibold">Event details</legend>
+        <div class="sm:col-span-2">
+          <label for="contact-event" class={label}>
+            Event name <span class={optional}>(optional)</span>
+          </label>
+          <input id="contact-event" name="event" type="text" class={field} />
+        </div>
+        <div>
+          <label for="contact-date" class={label}>
+            Event date <span class={optional}>(optional)</span>
+          </label>
+          <input
+            id="contact-date"
+            name="event-date"
+            type="date"
+            class={field}
+          />
+        </div>
+        <div>
+          <label for="contact-audience" class={label}>
+            Audience size <span class={optional}>(optional)</span>
+          </label>
+          <select id="contact-audience" name="audience" class={field}>
+            <option value="">Choose one</option>
+            <option>Under 50</option>
+            <option>50–200</option>
+            <option>200–500</option>
+            <option>500+</option>
+          </select>
+        </div>
+        <div class="sm:col-span-2">
+          <label for="contact-location" class={label}>
+            Location or virtual <span class={optional}>(optional)</span>
+          </label>
+          <input
+            id="contact-location"
+            name="location"
+            type="text"
+            placeholder="Detroit, MI or Virtual"
+            class={field}
+          />
+        </div>
+      </fieldset>
+
+      <div>
+        <label for="contact-message" class={label}>
+          Message
+        </label>
+        <textarea
+          id="contact-message"
+          name="message"
+          rows="6"
+          required
+          data-error="Enter a message."
+          aria-describedby="contact-message-error"
+          class={field}
+        ></textarea>
+        <p id="contact-message-error" class={error}></p>
+      </div>
+
+      <div>
+        <Button type="submit">Send message</Button>
+      </div>
+    </form>
+  </div>
+</Section>
+
+<style>
+  .contact-form:not(:has(input[name='inquiry'][value='speaking']:checked))
+    .speaking-fields {
+    display: none;
+  }
+</style>
+
+<script>
+  // Replaces the browser's validation bubbles with inline messages tied to
+  // each field (aria-invalid + aria-describedby), focusing the first error.
+  function enhance(form: HTMLFormElement) {
+    form.noValidate = true;
+    const fields = [
+      ...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+        '[data-error]',
+      ),
+    ];
+
+    const errorFor = (el: Element) => {
+      const owner = el.closest('fieldset[aria-describedby]') ?? el;
+      return document.getElementById(
+        owner.getAttribute('aria-describedby') ?? '',
+      );
+    };
+
+    const check = (el: HTMLInputElement | HTMLTextAreaElement) => {
+      const valid = el.checkValidity();
+      const group =
+        el.type === 'radio'
+          ? form.querySelectorAll<HTMLInputElement>(`[name="${el.name}"]`)
+          : [el];
+      group.forEach((input) =>
+        valid
+          ? input.removeAttribute('aria-invalid')
+          : input.setAttribute('aria-invalid', 'true'),
+      );
+      const message = errorFor(el);
+      if (message) message.textContent = valid ? '' : el.dataset.error!;
+      return valid;
+    };
+
+    form.addEventListener('submit', (event) => {
+      const invalid = fields.filter((el) => !check(el));
+      if (invalid.length > 0) {
+        event.preventDefault();
+        invalid[0].focus();
+      }
+    });
+
+    // Clear an error as soon as it's fixed.
+    form.addEventListener('input', (event) => {
+      const el = event.target as HTMLInputElement;
+      if (el.hasAttribute('aria-invalid')) check(el);
+      if (el.type === 'radio') {
+        const first = form.querySelector<HTMLInputElement>(
+          `[name="${el.name}"][data-error]`,
+        );
+        if (first) check(first);
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    document
+      .querySelectorAll<HTMLFormElement>('.contact-form')
+      .forEach(enhance);
+  });
+</script>

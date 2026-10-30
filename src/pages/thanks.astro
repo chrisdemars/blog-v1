@@ -1,0 +1,25 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Section from '../components/Section.astro';
+import Button from '../components/Button.astro';
+---
+
+<PageLayout
+  title="Thanks"
+  description="Your message to Chris DeMars was sent."
+  noindex
+  contact={false}
+>
+  <Section>
+    <h2 class="text-3xl font-bold">Message sent</h2>
+    <p class="mt-4 max-w-prose text-lg">
+      Thanks for reaching out. I'll get back to you within a few days.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <Button href="/">Back to home</Button>
+      <Button href="/blog/" appearance="outline">
+        Read the blog
+      </Button>
+    </div>
+  </Section>
+</PageLayout>
