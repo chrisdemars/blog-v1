@@ -11,7 +11,7 @@ const site = process.env.URL ?? 'http://localhost:4321';
 
 // Built and deployed, but kept out of the sitemap. These pages also set
 // `noindex` in their layout.
-const hiddenPages = ['/design-system/'];
+const hiddenPages = ['/design-system/', '/thanks/'];
 
 // https://astro.build/config
 export default defineConfig({
