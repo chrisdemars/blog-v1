@@ -47,32 +47,23 @@ const pair = (
   required = true,
 ): ContrastPair => ({ fg, bg, min, use, required });
 
+export const SURFACES = ['primary', 'secondary', 'accent', 'light'] as const;
+
 export const CONTRAST_PAIRS: ContrastPair[] = [
-  ...(['primary', 'secondary'] as const).flatMap((s) =>
-    [s, `${s}-raised`].flatMap((bg) => [
+  ...SURFACES.flatMap((s) => [
+    ...[s, `${s}-raised`].flatMap((bg) => [
       pair(`on-${s}`, bg, 4.5, 'Body text'),
       pair(`on-${s}-muted`, bg, 4.5, 'Muted text'),
+      pair(`${s}-link`, bg, 4.5, 'Links'),
+      // Borders outline controls (nav toggle, tags), so they get the 3:1 UI minimum.
+      pair(`${s}-border`, bg, 3, 'Borders'),
     ]),
-  ),
-  pair('secondary', 'primary', 4.5, 'Links on jet'),
-  pair('secondary', 'primary-raised', 4.5, 'Links in jet cards'),
-  pair('on-secondary', 'secondary', 4.5, 'Solid button on jet'),
-  pair('secondary', 'on-secondary', 4.5, 'Solid button on celadon'),
-  pair('secondary', 'primary', 3, 'Focus ring on jet'),
-  pair('on-secondary', 'secondary', 3, 'Focus ring on celadon'),
-  // Borders outline controls (nav toggle, tags), so they get the 3:1 UI minimum.
-  ...(['primary', 'secondary'] as const).flatMap((s) =>
-    [s, `${s}-raised`].map((bg) => pair(`${s}-border`, bg, 3, 'Borders')),
-  ),
-  ...['teal', 'green', 'celadon', 'mist'].flatMap((accent) => [
-    pair(`accent-${accent}`, 'primary', 4.5, 'Accent on jet'),
-    pair(`accent-${accent}`, 'primary-raised', 4.5, 'Accent in jet cards'),
-    pair(
-      `accent-${accent}`,
-      'secondary',
-      4.5,
-      'Accent on celadon (avoid)',
-      false,
-    ),
+    pair(`on-${s}-action`, `${s}-action`, 4.5, 'Button text'),
+    pair(`${s}-action`, s, 3, 'Button against its surface'),
+    pair(`${s}-focus`, s, 3, 'Focus ring'),
+  ]),
+  ...['teal', 'mint', 'celadon', 'mist'].flatMap((color) => [
+    pair(`code-${color}`, 'primary-raised', 4.5, 'Code on jet'),
+    pair(`code-${color}`, 'secondary', 4.5, 'Code on celadon (avoid)', false),
   ]),
 ];

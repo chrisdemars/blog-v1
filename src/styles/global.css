@@ -5,29 +5,63 @@
 
 /*
  * Palette: coolors.co/palette/1f2421-216869-49a078-9cc5a1-dce1de (#30).
- * Jet, celadon and platinum are used as-is. Caribbean current (#216869) and
- * mint (#49a078) fail AA as text on jet, so text uses lifted shades of them.
+ * Every palette color is a background, a text color, a link color and a
+ * button color somewhere. Each surface uses the exact palette hex; the one
+ * exception is muted text on celadon, where no palette color passes AA except
+ * jet, so it uses a deeper shade of caribbean current.
  * The comment on each token is its role, shown on /design-system.
  * scripts/check-contrast.mjs reads these values, so keep them as plain hex.
  */
 @theme {
+  /* Jet: the default surface. */
   --color-primary: #1f2421; /* jet */
-  --color-primary-raised: #272c29; /* cards and code on jet */
-  --color-primary-border: #398a72; /* borders on jet, current/mint blend */
+  --color-primary-raised: #1f2421; /* cards on jet, set off by their border */
+  --color-primary-border: #49a078; /* mint */
   --color-on-primary: #dce1de; /* text on jet (platinum) */
-  --color-on-primary-muted: #adb2af; /* secondary text on jet */
+  --color-on-primary-muted: #9cc5a1; /* secondary text and nav links on jet (celadon) */
+  --color-primary-link: #49a078; /* links on jet (mint) */
+  --color-primary-action: #49a078; /* buttons on jet (mint) */
+  --color-on-primary-action: #1f2421; /* button text on mint (jet) */
+  --color-primary-focus: #9cc5a1; /* focus ring on jet (celadon) */
 
+  /* Celadon: alternates with jet. */
   --color-secondary: #9cc5a1; /* celadon */
   --color-secondary-raised: #dce1de; /* cards on celadon (platinum) */
-  --color-secondary-border: #216869; /* borders on celadon (caribbean current) */
+  --color-secondary-border: #216869; /* caribbean current */
   --color-on-secondary: #1f2421; /* text on celadon (jet) */
   --color-on-secondary-muted: #204d4c; /* secondary text on celadon, deep current */
+  --color-secondary-link: #1f2421; /* links on celadon (jet) */
+  --color-secondary-action: #1f2421; /* buttons on celadon (jet) */
+  --color-on-secondary-action: #dce1de; /* button text on jet (platinum) */
+  --color-secondary-focus: #1f2421; /* focus ring on celadon (jet) */
 
-  /* Accents, only used on primary (jet) surfaces. */
-  --color-accent-teal: #759e9e; /* caribbean current, lifted */
-  --color-accent-green: #5ba884; /* mint, lifted */
-  --color-accent-celadon: #9cc5a1; /* celadon */
-  --color-accent-mist: #a4bdbb; /* current/platinum blend */
+  /* Caribbean current: the footer and call-to-action bands. */
+  --color-accent: #216869; /* caribbean current */
+  --color-accent-raised: #216869; /* cards on current, set off by their border */
+  --color-accent-border: #dce1de; /* platinum */
+  --color-on-accent: #dce1de; /* text on current (platinum) */
+  --color-on-accent-muted: #dce1de; /* secondary text on current (platinum) */
+  --color-accent-link: #dce1de; /* links on current (platinum) */
+  --color-accent-action: #9cc5a1; /* buttons on current (celadon) */
+  --color-on-accent-action: #1f2421; /* button text on celadon (jet) */
+  --color-accent-focus: #dce1de; /* focus ring on current (platinum) */
+
+  /* Platinum: every fourth section. */
+  --color-light: #dce1de; /* platinum */
+  --color-light-raised: #dce1de; /* cards on platinum, set off by their border */
+  --color-light-border: #216869; /* caribbean current */
+  --color-on-light: #1f2421; /* text on platinum (jet) */
+  --color-on-light-muted: #216869; /* secondary text on platinum (current) */
+  --color-light-link: #216869; /* links on platinum (current) */
+  --color-light-action: #216869; /* buttons on platinum (current) */
+  --color-on-light-action: #dce1de; /* button text on current (platinum) */
+  --color-light-focus: #216869; /* focus ring on platinum (current) */
+
+  /* Code-highlighting accents, only used on jet. */
+  --color-code-teal: #759e9e; /* caribbean current, lifted to pass on jet */
+  --color-code-mint: #49a078; /* mint */
+  --color-code-celadon: #9cc5a1; /* celadon */
+  --color-code-mist: #a4bdbb; /* current/platinum blend */
 
   --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Source Code Pro Variable', ui-monospace, monospace;
@@ -80,7 +114,7 @@
 }
 
 /*
- * Sections alternate primary/secondary automatically, in the order they
+ * Sections cycle jet, celadon, jet, platinum automatically, in the order they
  * appear on the page. A Section with an explicit variant opts out.
  */
 @layer components {
@@ -88,8 +122,12 @@
     @apply surface-primary;
   }
 
-  .section:nth-child(even of .section):not([data-variant]) {
+  .section:nth-child(4n + 2 of .section):not([data-variant]) {
     @apply surface-secondary;
+  }
+
+  .section:nth-child(4n of .section):not([data-variant]) {
+    @apply surface-light;
   }
 }
 
@@ -99,10 +137,10 @@
   --surface-border: var(--color-primary-border);
   --on-surface: var(--color-on-primary);
   --on-surface-muted: var(--color-on-primary-muted);
-  --link: var(--color-secondary);
-  --action: var(--color-secondary);
-  --on-action: var(--color-on-secondary);
-  --focus: var(--color-secondary);
+  --link: var(--color-primary-link);
+  --action: var(--color-primary-action);
+  --on-action: var(--color-on-primary-action);
+  --focus: var(--color-primary-focus);
   background-color: var(--surface);
   color: var(--on-surface);
 }
@@ -113,10 +151,38 @@
   --surface-border: var(--color-secondary-border);
   --on-surface: var(--color-on-secondary);
   --on-surface-muted: var(--color-on-secondary-muted);
-  --link: var(--color-on-secondary);
-  --action: var(--color-on-secondary);
-  --on-action: var(--color-secondary);
-  --focus: var(--color-on-secondary);
+  --link: var(--color-secondary-link);
+  --action: var(--color-secondary-action);
+  --on-action: var(--color-on-secondary-action);
+  --focus: var(--color-secondary-focus);
+  background-color: var(--surface);
+  color: var(--on-surface);
+}
+
+@utility surface-accent {
+  --surface: var(--color-accent);
+  --surface-raised: var(--color-accent-raised);
+  --surface-border: var(--color-accent-border);
+  --on-surface: var(--color-on-accent);
+  --on-surface-muted: var(--color-on-accent-muted);
+  --link: var(--color-accent-link);
+  --action: var(--color-accent-action);
+  --on-action: var(--color-on-accent-action);
+  --focus: var(--color-accent-focus);
+  background-color: var(--surface);
+  color: var(--on-surface);
+}
+
+@utility surface-light {
+  --surface: var(--color-light);
+  --surface-raised: var(--color-light-raised);
+  --surface-border: var(--color-light-border);
+  --on-surface: var(--color-on-light);
+  --on-surface-muted: var(--color-on-light-muted);
+  --link: var(--color-light-link);
+  --action: var(--color-light-action);
+  --on-action: var(--color-on-light-action);
+  --focus: var(--color-light-focus);
   background-color: var(--surface);
   color: var(--on-surface);
 }
