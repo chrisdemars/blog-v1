@@ -63,7 +63,8 @@ const variants = Object.keys(SURFACE_CLASS) as (keyof typeof SURFACE_CLASS)[];
       Colors
     </h2>
     <p class="mt-2 max-w-prose">
-      Matched to spacetimedb.com. Read live from{' '}
+      Jet, caribbean current, mint, celadon and platinum (#30). Each is used for
+      backgrounds, text, links and buttons. Read live from{' '}
       <code>src/styles/global.css</code>, so this list can't drift from the
       site.
     </p>
@@ -166,10 +167,10 @@ const variants = Object.keys(SURFACE_CLASS) as (keyof typeof SURFACE_CLASS)[];
       Sections &amp; components
     </h2>
     <p class="mt-2 max-w-prose">
-      Each <code>&lt;Section&gt;</code> alternates dark → green automatically;
-      pass <code>variant</code> to force one. Components read the colors of the
-      surface they sit on, so the same markup works on both. Press{' '}
-      <kbd>Tab</kbd> to see focus rings.
+      Each <code>&lt;Section&gt;</code> cycles jet → celadon → jet → platinum
+      automatically; pass <code>variant</code> to force one. Components read the
+      colors of the surface they sit on, so the same markup works on all four.
+      Press <kbd>Tab</kbd> to see focus rings.
     </p>
     <div class="mt-8 grid gap-6 lg:grid-cols-2">
       {variants.map((variant) => (
@@ -232,7 +233,7 @@ const variants = Object.keys(SURFACE_CLASS) as (keyof typeof SURFACE_CLASS)[];
       Post bodies use <code>prose prose-surface</code>, which maps the
       typography plugin onto the current surface. Posts sit on dark sections.
       Code blocks use <code>src/styles/code-theme.ts</code>, built from the
-      accent colors, all AA on <code>primary-raised</code>.
+      palette, all AA on jet.
     </p>
     <div class="surface-primary mt-8 rounded-xl border border-surface-border p-6 sm:p-10">
       <div class="prose prose-lg prose-surface max-w-none">

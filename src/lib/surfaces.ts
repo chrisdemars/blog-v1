@@ -3,6 +3,8 @@
 export const SURFACE_CLASS = {
   primary: 'surface-primary',
   secondary: 'surface-secondary',
+  accent: 'surface-accent',
+  light: 'surface-light',
 } as const;
 
 export type SurfaceVariant = keyof typeof SURFACE_CLASS;

@@ -1,32 +1,33 @@
 import type { ThemeRegistration } from 'shiki';
 
-// Syntax highlighting built from the site palette. Every color passes WCAG AA
-// on --color-primary-raised (see /design-system).
+// Syntax highlighting built from the site palette: keywords mint, strings
+// celadon, functions mist, constants and comments teal, types platinum (bold).
+// Every color passes WCAG AA on jet (see /design-system).
 export const codeTheme = {
-  name: 'spacetime',
+  name: 'jet-and-celadon',
   type: 'dark' as const,
   colors: {
-    'editor.background': '#122129',
-    'editor.foreground': '#e6e9f0',
+    'editor.background': '#1f2421',
+    'editor.foreground': '#dce1de',
   },
   tokenColors: [
     {
       scope: ['comment', 'punctuation.definition.comment'],
       settings: {
-        foreground: '#b6c0cf',
+        foreground: '#759e9e',
         fontStyle: 'italic',
       },
     },
     {
       scope: ['keyword', 'storage', 'storage.type', 'keyword.operator.new'],
       settings: {
-        foreground: '#ff80fb',
+        foreground: '#49a078',
       },
     },
     {
       scope: ['string', 'string.quoted', 'markup.inline.raw'],
       settings: {
-        foreground: '#4cf490',
+        foreground: '#9cc5a1',
       },
     },
     {
@@ -37,7 +38,7 @@ export const codeTheme = {
         'entity.name.tag',
       ],
       settings: {
-        foreground: '#02befa',
+        foreground: '#a4bdbb',
       },
     },
     {
@@ -48,7 +49,7 @@ export const codeTheme = {
         'variable.other.constant',
       ],
       settings: {
-        foreground: '#fbdc8e',
+        foreground: '#759e9e',
       },
     },
     {
@@ -60,7 +61,8 @@ export const codeTheme = {
         'entity.other.attribute-name',
       ],
       settings: {
-        foreground: '#a880ff',
+        foreground: '#dce1de',
+        fontStyle: 'bold',
       },
     },
     {
