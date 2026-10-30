@@ -45,15 +45,12 @@ const toExcerpt = (markdown: string) =>
 export function talksLoader(): Loader {
   return {
     name: 'talks-loader',
+    // Runs once per build or `astro dev` start; restart the dev server
+    // after editing the allowlist.
     load: async (context) => {
       const allowlistPath = fileURLToPath(
         new URL(ALLOWLIST, context.config.root),
       );
-      // Re-run in `astro dev` whenever the allowlist is edited.
-      context.watcher?.add(allowlistPath);
-      context.watcher?.on('change', (path) => {
-        if (path === allowlistPath) loadTalks(context, allowlistPath);
-      });
       await loadTalks(context, allowlistPath);
     },
   };
