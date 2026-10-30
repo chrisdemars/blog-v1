@@ -1,0 +1,17 @@
+# Events for /schedule, merged with the confirmed events on Chris's public
+# Sessionize profile (https://sessionize.com/chris-demars).
+#
+# Only list confirmed events, never pending invites.
+#
+# - To add an event that isn't on Sessionize, give it a new `id`.
+# - To add details to a Sessionize event (exact dates, a talk, virtual),
+#   use its id: the event name in kebab-case, e.g. codemash-great-lakes-2027.
+# - `hidden: true` removes a Sessionize event from the site.
+#
+# Dates: YYYY-MM-DD, or YYYY-MM when only the month is known. Exact dates
+# enable "Add to calendar" and the /schedule.ics feed.
+#
+# Fields: id*, name, url, location, virtual, start, end, talk (a /talks slug),
+# hidden
+
+[]

@@ -1,0 +1,24 @@
+name: Scheduled rebuild
+
+# Rebuilds the site daily so /schedule picks up new Sessionize events and
+# moves finished events to "Past". Does nothing until the NETLIFY_BUILD_HOOK
+# repository secret is set (Netlify: Site configuration → Build hooks).
+
+on:
+  schedule:
+    - cron: '0 9 * * *' # 09:00 UTC, early morning in Detroit
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Netlify build
+        env:
+          NETLIFY_BUILD_HOOK: ${{ secrets.NETLIFY_BUILD_HOOK }}
+        run: |
+          if [ -z "$NETLIFY_BUILD_HOOK" ]; then
+            echo "NETLIFY_BUILD_HOOK isn't set; skipping."
+            exit 0
+          fi
+          curl --fail --silent --show-error -X POST -d '{}' "$NETLIFY_BUILD_HOOK"
