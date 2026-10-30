@@ -32,6 +32,29 @@
   --font-mono: 'Source Code Pro Variable', ui-monospace, monospace;
   /* Headings only. Just the bold (700) weight is loaded. */
   --font-display: 'Syncopate', ui-sans-serif, system-ui, sans-serif;
+
+  /*
+   * Heading scale (#23), modeled on nnennandukwe.com but capped lower:
+   * Syncopate is so wide ("Chris DeMars" is ~9.3em) that the reference
+   * sizes would overflow. Display, title, and card sizes use cqi so they
+   * scale with their own column: give the heading's parent @container.
+   * Each is sized so a ~10em word (e.g. "Vulnerability") still fits.
+   */
+  --text-display: min(10cqi, 6.5rem); /* home hero name */
+  --text-display--line-height: 1;
+  --text-display--letter-spacing: -0.062em;
+  --text-title: clamp(1.5rem, 8.5cqi, 4.5rem); /* page and post h1 */
+  --text-title--line-height: 1.03;
+  --text-title--letter-spacing: -0.045em;
+  --text-section: clamp(1.75rem, 4.5vw, 4rem); /* section h2 */
+  --text-section--line-height: 1.06;
+  --text-section--letter-spacing: -0.045em;
+  --text-feature: clamp(1.25rem, 3.1vw + 0.25rem, 2.75rem); /* prose h2 */
+  --text-feature--line-height: 1.12;
+  --text-feature--letter-spacing: -0.035em;
+  --text-card: clamp(1rem, 8.5cqi, 1.375rem); /* card and prose h3 */
+  --text-card--line-height: 1.25;
+  --text-card--letter-spacing: -0.02em;
 }
 
 /*
@@ -88,6 +111,8 @@
   h6 {
     @apply font-display font-bold;
     font-synthesis: none;
+    /* Last resort for a single word wider than the screen. */
+    overflow-wrap: break-word;
   }
 }
 
@@ -154,9 +179,21 @@
   --tw-prose-pre-bg: var(--color-primary-raised);
   --tw-prose-th-borders: var(--surface-border);
   --tw-prose-td-borders: var(--surface-border);
+  /* Long URLs in old posts would otherwise scroll the page on phones. */
+  overflow-wrap: break-word;
 
   & :where(h1, h2, h3, h4, h5, h6) {
     @apply font-bold;
+  }
+  /* :is() outranks the typography plugin's :where() heading sizes. */
+  & :is(h2) {
+    @apply text-feature;
+  }
+  & :is(h3) {
+    @apply text-card;
+  }
+  & :is(h4) {
+    @apply text-lg;
   }
 
   & :where(code):not(:where(pre code)) {

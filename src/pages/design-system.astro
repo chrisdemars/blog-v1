@@ -22,16 +22,14 @@ const contrast = CONTRAST_PAIRS.map((pair) => {
 });
 
 const typeScale = [
+  { label: 'Home hero name', class: 'font-display font-bold text-display' },
+  { label: 'Page title (h1)', class: 'font-display font-bold text-title' },
   {
-    label: 'Home hero name',
-    class: 'font-display text-4xl font-bold tracking-tight sm:text-6xl',
+    label: 'Section heading (h2)',
+    class: 'font-display font-bold text-section',
   },
-  {
-    label: 'Page title (h1)',
-    class: 'font-display text-3xl font-bold tracking-tight sm:text-5xl',
-  },
-  { label: 'Section heading (h2)', class: 'font-display text-3xl font-bold' },
-  { label: 'Card heading (h3)', class: 'font-display text-lg font-bold' },
+  { label: 'Prose heading (h2)', class: 'font-display font-bold text-feature' },
+  { label: 'Card heading (h3)', class: 'font-display font-bold text-card' },
   { label: 'Body', class: 'text-base' },
   { label: 'Lead / intro', class: 'text-lg text-on-surface-muted' },
   {
@@ -59,7 +57,7 @@ const variants = Object.keys(SURFACE_CLASS) as (keyof typeof SURFACE_CLASS)[];
   noindex
 >
   <Section aria-labelledby="colors">
-    <h2 id="colors" class="text-3xl">
+    <h2 id="colors" class="text-section">
       Colors
     </h2>
     <p class="mt-2 max-w-prose">
@@ -82,7 +80,7 @@ const variants = Object.keys(SURFACE_CLASS) as (keyof typeof SURFACE_CLASS)[];
   </Section>
 
   <Section aria-labelledby="contrast">
-    <h2 id="contrast" class="text-3xl">
+    <h2 id="contrast" class="text-section">
       Contrast
     </h2>
     <p class="mt-2 max-w-prose">
@@ -140,7 +138,7 @@ const variants = Object.keys(SURFACE_CLASS) as (keyof typeof SURFACE_CLASS)[];
   </Section>
 
   <Section aria-labelledby="type">
-    <h2 id="type" class="text-3xl">
+    <h2 id="type" class="text-section">
       Typography
     </h2>
     <p class="mt-2 max-w-prose">
@@ -156,14 +154,18 @@ const variants = Object.keys(SURFACE_CLASS) as (keyof typeof SURFACE_CLASS)[];
             <br />
             <span class="text-xs">{className}</span>
           </dt>
-          <dd class={className}>Software supply chain security</dd>
+          <dd class="@container min-w-0">
+            <span class:list={['block', className]}>
+              Software supply chain security
+            </span>
+          </dd>
         </div>
       ))}
     </dl>
   </Section>
 
   <Section aria-labelledby="components">
-    <h2 id="components" class="text-3xl">
+    <h2 id="components" class="text-section">
       Sections &amp; components
     </h2>
     <p class="mt-2 max-w-prose">
@@ -199,7 +201,7 @@ const variants = Object.keys(SURFACE_CLASS) as (keyof typeof SURFACE_CLASS)[];
             <Tag href="#components">Linked tag</Tag>
           </div>
           <Card class="mt-4">
-            <h3 class="text-lg">Card</h3>
+            <h3 class="text-card">Card</h3>
             <p class="mt-1 text-on-surface-muted">
               Uses the raised shade of its surface.
             </p>
@@ -211,7 +213,7 @@ const variants = Object.keys(SURFACE_CLASS) as (keyof typeof SURFACE_CLASS)[];
   </Section>
 
   <Section aria-labelledby="headers">
-    <h2 id="headers" class="text-3xl">
+    <h2 id="headers" class="text-section">
       Headers
     </h2>
     <p class="mt-2 max-w-prose">
@@ -226,7 +228,7 @@ const variants = Object.keys(SURFACE_CLASS) as (keyof typeof SURFACE_CLASS)[];
   </Section>
 
   <Section aria-labelledby="prose">
-    <h2 id="prose" class="text-3xl">
+    <h2 id="prose" class="text-section">
       Blog posts
     </h2>
     <p class="mt-2 max-w-prose">
@@ -253,7 +255,7 @@ const variants = Object.keys(SURFACE_CLASS) as (keyof typeof SURFACE_CLASS)[];
   </Section>
 
   <Section aria-labelledby="pending">
-    <h2 id="pending" class="text-3xl">
+    <h2 id="pending" class="text-section">
       Coming later
     </h2>
     <ul class="mt-4 list-disc space-y-1 pl-5">

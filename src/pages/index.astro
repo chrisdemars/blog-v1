@@ -10,14 +10,14 @@ import { SITE, SPEAKING_TOPICS } from '../config';
 <BaseLayout title={SITE.title} description={SITE.description}>
   <HomeHero />
   <Section aria-labelledby="topics-heading">
-    <h2 id="topics-heading" class="text-3xl">
+    <h2 id="topics-heading" class="text-section">
       What I speak about
     </h2>
     <ul class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {SPEAKING_TOPICS.map(({ title, description }) => (
         <li>
           <Card class="h-full">
-            <h3 class="text-lg">{title}</h3>
+            <h3 class="text-card">{title}</h3>
             <p class="mt-2 text-on-surface-muted">{description}</p>
           </Card>
         </li>

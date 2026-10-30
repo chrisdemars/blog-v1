@@ -11,20 +11,18 @@ const { title } = Astro.props;
 ---
 
 <section class="section surface-primary" data-variant="primary">
-  <div class="mx-auto flex max-w-5xl items-center gap-5 px-4 py-10 sm:gap-6 sm:px-6 sm:py-14">
+  <div class="mx-auto flex max-w-5xl flex-col items-start gap-5 px-4 py-10 sm:flex-row sm:items-center sm:gap-6 sm:px-6 sm:py-14">
     <Image
       src={headshot}
       alt=""
       width={480}
       class="size-20 shrink-0 rounded-full border-2 border-link object-cover object-[53%_30%] sm:size-28"
     />
-    <div>
+    <div class="@container w-full min-w-0 sm:flex-1">
       <p class="font-mono text-sm text-on-surface-muted">
         {SITE.name} · {SITE.jobTitle}
       </p>
-      <h1 class="mt-1 text-3xl tracking-tight sm:text-5xl">
-        {title}
-      </h1>
+      <h1 class="mt-1 text-title text-balance">{title}</h1>
     </div>
   </div>
 </section>
