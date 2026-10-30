@@ -1,0 +1,112 @@
+{
+  "approved": [
+    {
+      "file": "a11y-burnout-leynote.md",
+      "topics": [
+        "accessibility"
+      ]
+    },
+    {
+      "file": "build-1996-web.md",
+      "topics": [
+        "frontend"
+      ]
+    },
+    {
+      "file": "coding-speed-ai.md",
+      "topics": [
+        "supply-chain"
+      ]
+    },
+    {
+      "file": "dep-trust-issues.md",
+      "topics": [
+        "supply-chain"
+      ]
+    },
+    {
+      "file": "end-of-upgrade-it.md",
+      "topics": [
+        "supply-chain"
+      ]
+    },
+    {
+      "file": "ghosts-in-the-machine.md",
+      "topics": [
+        "supply-chain",
+        "paranormal"
+      ]
+    },
+    {
+      "file": "node-modules-iceberg.md",
+      "topics": [
+        "supply-chain"
+      ]
+    },
+    {
+      "file": "possessed-js-packages.md",
+      "featured": true,
+      "topics": [
+        "supply-chain",
+        "paranormal"
+      ]
+    },
+    {
+      "file": "react-native-supply-chain.md",
+      "topics": [
+        "supply-chain"
+      ]
+    },
+    {
+      "file": "sasquatch-as-a-service-chatbot.md",
+      "topics": [
+        "paranormal"
+      ]
+    },
+    {
+      "file": "sboms-for-frontend-devs.md",
+      "topics": [
+        "supply-chain",
+        "paranormal"
+      ]
+    },
+    {
+      "file": "ufos-mongo-next-cloud.md",
+      "topics": [
+        "paranormal"
+      ]
+    }
+  ],
+  "declined": [
+    "a11y-for-the-enterprise.md",
+    "a11y-pitfalls.md",
+    "accessibility-feature-flags.md",
+    "accessible-vue.md",
+    "aria-in-practice.md",
+    "axe-ci.md",
+    "block-element-magic.md",
+    "building-accessible-components-razor.md",
+    "css-feature-flags.md",
+    "demystifying-ab-testing.md",
+    "demystifying-trunk-based-dev.md",
+    "electrify-your-web-app.md",
+    "focusing-focus.md",
+    "gulping-your-css.md",
+    "hacking-human-perception.md",
+    "hybrid-app-screen-readers.md",
+    "large-scale.md",
+    "lighthouse.md",
+    "low-vision.md",
+    "power-of-css-sequel.md",
+    "power-of-css.md",
+    "react-a-tron.md",
+    "reactifying-your-jekyll.md",
+    "spark-ds-intro.md",
+    "subway-sandwich-artist.md",
+    "tracking-bigfoot-ff.md",
+    "ufos-mongo-cloud.md",
+    "ui-control-feature-flags.md",
+    "voiceover-react-native.md",
+    "wkshps/accessibility.md"
+  ]
+}
